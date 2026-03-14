@@ -1,0 +1,10 @@
+CREATE DATABASE catalog_db;
+CREATE DATABASE cart_db;
+CREATE DATABASE checkout_db;
+CREATE DATABASE order_db;
+CREATE DATABASE payment_db;
+CREATE DATABASE shipping_db;
+CREATE DATABASE email_db;
+CREATE DATABASE recommendation_db;
+CREATE DATABASE ad_db;
+CREATE DATABASE currency_db;
