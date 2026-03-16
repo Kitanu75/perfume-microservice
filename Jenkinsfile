@@ -68,7 +68,12 @@ pipeline {
                 }
             }
         }
-
+        stage('Verify Cluster') {
+            steps {
+                sh 'kubectl get nodes'
+                sh 'kubectl get pods -A'
+            }
+        }
         stage('Update kubeconfig') {
             steps {
                 withCredentials([[
@@ -84,23 +89,28 @@ pipeline {
 
         stage('Deploy with Helm') {
             steps {
-                script {
-                    // 1. Deploy Database first
-                    echo "Deploying PostgreSQL Database..."
-                    sh "helm upgrade --install db ./helm/db --namespace perfume --create-namespace --wait"
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-jenkins'
+                ]]) {
+                    script {
 
-                    // 2. Deploy all other services
-                    def servicesList = SERVICES.split(',')
-                    servicesList.each { service ->
-                        echo "Deploying ${service}..."
-                        sh """
+                        echo "Deploying PostgreSQL Database..."
+                        sh "helm upgrade --install db ./helm/db --namespace perfume --create-namespace --wait"
+
+                        def servicesList = SERVICES.split(',')
+
+                        servicesList.each { service ->
+                            echo "Deploying ${service}..."
+                            sh """
                             helm upgrade --install ${service} ./helm/${service} \
                             --namespace perfume \
                             --set image.repository=${ECR_REGISTRY}/perfume-${service} \
                             --set image.tag=${IMAGE_TAG} \
                             --set ingress.enabled=true \
                             --wait
-                        """
+                            """
+                        }             
                     }
                 }
             }
