@@ -104,12 +104,14 @@ pipeline {
                 ]]) {
                     script {
 
-                        echo "Deploying PostgreSQL Database..."
-                        sh "helm upgrade --install db ./helm/db --namespace perfume --create-namespace --wait"
+                        // Set KUBECONFIG for Jenkins user
+                        withEnv(["KUBECONFIG=/var/lib/jenkins/.kube/config"]) {
+                            echo "Deploying PostgreSQL Database..."
+                            sh "helm upgrade --install db ./helm/db --namespace perfume --create-namespace --wait"
 
-                        def servicesList = SERVICES.split(',')
+                            def servicesList = SERVICES.split(',')
 
-                        servicesList.each { service ->
+                            servicesList.each { service ->
                             echo "Deploying ${service}..."
                             sh """
                             helm upgrade --install ${service} ./helm/${service} \
