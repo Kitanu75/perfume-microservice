@@ -38,27 +38,27 @@ services:
       - NODE_ENV=production
     depends_on:
       catalog-service:
-        condition: service_healthy
+        condition: service_started
       cart-service:
-        condition: service_healthy
+        condition: service_started
       checkout-service:
-        condition: service_healthy
+        condition: service_started
       order-service:
-        condition: service_healthy
+        condition: service_started
       payment-service:
-        condition: service_healthy
+        condition: service_started
       shipping-service:
-        condition: service_healthy
+        condition: service_started
       email-service:
-        condition: service_healthy
+        condition: service_started
       recommendation-service:
-        condition: service_healthy
+        condition: service_started
       ad-service:
-        condition: service_healthy
+        condition: service_started
       currency-service:
-        condition: service_healthy
+        condition: service_started
       user-service:
-        condition: service_healthy
+        condition: service_started
     networks:
       - perfume_net
     restart: unless-stopped

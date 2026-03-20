@@ -425,6 +425,7 @@
                                     <button onClick={() => { goToHome(); setActiveCategory('Men'); setTimeout(() => document.getElementById('catalog').scrollIntoView(), 100) }} className="hover:text-brand-500 transition">Men</button>
                                     <button onClick={() => { goToHome(); setActiveCategory('Women'); setTimeout(() => document.getElementById('catalog').scrollIntoView(), 100) }} className="hover:text-brand-500 transition">Women</button>
                                     <button onClick={() => { goToHome(); setActiveCategory('Kids'); setTimeout(() => document.getElementById('catalog').scrollIntoView(), 100) }} className="hover:text-brand-500 transition">Kids</button>
+                                    <a href="/admin-portal.html" className="hover:text-brand-500 transition border-l border-gray-300 pl-4 font-bold text-brand-600">Admin</a>
                                 </div>
                             </div>
                             <div className={`flex items-center space-x-5 transition-colors ${isScrolled || view !== 'home' ? 'text-gray-800' : 'text-white'}`}>
